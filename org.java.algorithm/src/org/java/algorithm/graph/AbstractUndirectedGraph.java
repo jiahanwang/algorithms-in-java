@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
@@ -123,8 +124,17 @@ public class AbstractUndirectedGraph<V, E>
 
 	@Override
 	public Collection<V> adjacentVertices(V vertex) {
-		// TODO Auto-generated method stub
-		//return null;
+		if(!vertices.containsKey(vertex)){
+			return null;
+		}
+		Collection<V> verticesList =  new LinkedList<V>();
+		for(E edge : vertices.get(vertex)){
+			V v  = opposite(edge, vertex);
+			if(v != null){
+				verticesList.add(v);
+			}
+		}
+		return Collections.unmodifiableCollection(verticesList);
 	}
 
 	@Override
@@ -141,7 +151,7 @@ public class AbstractUndirectedGraph<V, E>
 		if(! vertices.containsKey(vertex1) || ! vertices.containsKey(vertex2)){
 			return false;
 		}else{
-			// must create a new Set
+			// must create a new Set, to prevent contaminating the original one
 			Set<E> adjacentList = new HashSet<E>(vertices.get(vertex1));
 			adjacentList.retainAll(vertices.get(vertex2));
 			if(adjacentList.size() == 0){
@@ -154,7 +164,7 @@ public class AbstractUndirectedGraph<V, E>
 
 	@Override
 	public boolean areIncident(V vertex, E edge) {
-		if(! vertices.containsKey(vertex) || ! edges.containsKey(edge)){
+		if(!vertices.containsKey(vertex) || !edges.containsKey(edge)){
 			return false;
 		}else{
 			return edges.get(edge).contains(vertex);
@@ -162,15 +172,33 @@ public class AbstractUndirectedGraph<V, E>
 	}
 
 	@Override
-	public Collection<E> endVertices(E edge) {
-		// TODO Auto-generated method stub
-		//return null;
+	public Collection<V> endVertices(E edge) {
+		if(!edges.containsKey(edge)){
+			return null;
+		}
+		Collection<V> verticesList = new LinkedList<V>();
+		verticesList.add(edges.get(edge).getSource());
+		verticesList.add(edges.get(edge).getDestination());
+		return Collections.unmodifiableCollection(verticesList);
+		
 	}
 
 	@Override
 	public V opposite(E edge, V vertex) {
-		// TODO Auto-generated method stub
-		//return null;
+		if(!vertices.containsKey(vertex) || !edges.containsKey(edge)){
+			return null;
+		}
+		Pair<V> pair = edges.get(edge); 
+		if(vertex.equals(pair.getSource())){
+			return pair.getDestination();
+		}else 
+			if (vertex.equals(pair.getDestination())){
+				return pair.getSource();
+			}else{
+				// this edge is not incident to this vertex
+				vertices.get(vertex).remove(edge);
+				return null;
+			}
 	}
 
 	@Override

@@ -4,7 +4,7 @@ import java.util.Collection;
 
 public interface Graph<V, E> {
 	
-	boolean addEdge(E edge, V vertex1, V vertex2);
+	boolean addEdge(E edge, V src, V des);
 	
 	boolean addVertex(V vertex);
 
@@ -43,7 +43,7 @@ public interface Graph<V, E> {
 	boolean areIncident(V vertex, E edge);
 	
 	
-	Collection<E> endVertices(E edge);
+	Collection<V> endVertices(E edge);
 	
 	V opposite(E edge, V vertex);
 	

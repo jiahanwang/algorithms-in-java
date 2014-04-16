@@ -24,25 +24,5 @@ public abstract class AbstractGraph<V, E> implements Graph<V, E> {
         }
         return modified;
 	}
-
-	@Override
-	public int numOfVertices() {
-		return getVertices().size();
-	}
-
-	@Override
-	public int numOfEdges() {
-		return getEdges().size();
-	}
-
-	@Override
-	public boolean containsVertex(V vertex) {
-		return getVertices().contains(vertex);
-	}
-
-	@Override
-	public boolean containsEdge(E edge) {
-		return getEdges().contains(edge);
-	}
 	
 }
