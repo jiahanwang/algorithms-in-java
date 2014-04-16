@@ -2,29 +2,38 @@ package org.java.algorithm.graph;
 
 public class Pair<T>{
 	
-	private T first;
-	private T second;
+	private T source;
+	private T destination;
 	
-	public Pair(T value1, T value2){
-    	if(value1 == null || value2 == null) 
+	public Pair(T source, T destination) {
+    	if(source == null || destination == null) 
     		throw new IllegalArgumentException("Pair cannot contain null values");
-        setFirst(value1);
-        setSecond(value2);
+        setSource(source);
+        setDestination(destination);
     }
-
-	public T getFirst() {
-		return first;
+	
+	public boolean contains(T t) {
+		if(source == t || destination == t || source.equals(t)|| destination.equals(t)){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public T getSource() {
+		return source;
 	}
 
-	public void setFirst(T first) {
-		this.first = first;
+	public void setSource(T source) {
+		this.source = source;
 	}
 
-	public T getSecond() {
-		return second;
+	public T getDestination() {
+		return destination;
 	}
 
-	public void setSecond(T second) {
-		this.second = second;
+	public void setDestination(T destination) {
+		this.destination = destination;
 	}
+
 }

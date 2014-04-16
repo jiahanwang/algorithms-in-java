@@ -3,7 +3,7 @@ package org.java.algorithm.graph;
 public class Test {
 	
 	public static void main(String[] args){
-		SimpleUndirectedGraph<String, String> graph = new SimpleUndirectedGraph<String, String>();
+		SimpleGraph<String, String> graph = new SimpleGraph<String, String>();
 		graph.addEdge("edge1", "1", "2");
 		graph.addEdge("edge2", "2", "3");
 		graph.addVertex("3");

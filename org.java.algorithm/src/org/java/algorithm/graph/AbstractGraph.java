@@ -1,33 +1,48 @@
 package org.java.algorithm.graph;
 
-import java.util.*;
+import java.util.Collection;
 
-public abstract class AbstractGraph<V,E> {
+public abstract class AbstractGraph<V, E> implements Graph<V, E> {
 	
-	public abstract boolean addEdge(E e, V v1, V v2);
-	
-	public abstract boolean removeEdge(E e);
-	
-	public abstract boolean addVertex(V vertex);
-	
-	public abstract boolean removeVertex(V vertext);
-	
-	public abstract int numOfVertices();
-	
-	public abstract int numOfEdges();
-	
-	public abstract Collection<V> getVertices();
-	
-	public abstract Collection<E> getEdges();
-	
-	public abstract Collection<V> adjacentVertices(E e);
-	
-	public abstract Collection<E> incidentEdges(V vertex);
-	
-	public abstract boolean areAdjacent(V v1, V v2);
-	
-	public abstract boolean areIncident(V vertex, E edge);
-	
-	public abstract int degree(V vertex);
+	protected AbstractGraph() {
+	}
+
+	@Override
+	public boolean removeAllEdgs(Collection<? extends E> edges) {
+		boolean modified = false;
+		for(E edge : edges){
+			modified |= removeEdge(edge);
+		}
+		return modified;
+	}
+
+	@Override
+	public boolean removeAllVertices(Collection<? extends V> vertices) {
+		boolean modified = false;
+        for (V vertex : vertices) {
+            modified |= removeVertex(vertex);
+        }
+        return modified;
+	}
+
+	@Override
+	public int numOfVertices() {
+		return getVertices().size();
+	}
+
+	@Override
+	public int numOfEdges() {
+		return getEdges().size();
+	}
+
+	@Override
+	public boolean containsVertex(V vertex) {
+		return getVertices().contains(vertex);
+	}
+
+	@Override
+	public boolean containsEdge(E edge) {
+		return getEdges().contains(edge);
+	}
 	
 }
