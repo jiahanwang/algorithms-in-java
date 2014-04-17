@@ -25,7 +25,7 @@ public class AbstractUndirectedGraph<V, E>
 	@Override
 	public boolean addEdge(E edge, V vertex1, V vertex2) {
 		if(edge == null || vertex1 == null || vertex2 == null) 
-    		throw new IllegalArgumentException("Edges cannot contain null values");
+    		throw new NullPointerException("Edges cannot contain null values");
 		if(edges.containsKey(edge)){
 			return false;
 		}
@@ -51,7 +51,7 @@ public class AbstractUndirectedGraph<V, E>
 	@Override
 	public boolean addVertex(V vertex) {
 		if(vertex == null) 
-    		throw new IllegalArgumentException("Vertices cannot contain null values");
+    		throw new NullPointerException("Vertices cannot contain null values");
 		if(vertices.containsKey(vertex)){
 			// this vertex already exists
 			return false;
@@ -83,11 +83,12 @@ public class AbstractUndirectedGraph<V, E>
 			// this vertex doesn't exist(including null)
 			return false;
 		}else{
-			// remove all the adjacent edges
-			for(E edge : vertices.get(vertex)){
+			Set<E> incidentEdges = new HashSet<E>(vertices.get(vertex));
+			vertices.remove(vertex);
+			// remove all the incident edges
+			for(E edge : incidentEdges){
 				removeEdge(edge);
 			}
-			vertices.remove(vertex);
 			return true;
 		}
 	}
