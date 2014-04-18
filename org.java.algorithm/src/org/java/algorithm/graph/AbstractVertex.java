@@ -2,18 +2,24 @@ package org.java.algorithm.graph;
 
 public abstract class AbstractVertex {
 	
-	private String id;
+	protected final String id;
+	protected boolean visited;
 	
 	AbstractVertex(String id){
 		this.id = id;
+		this.visited = false;
 	}
-	
+
 	public String getId() {
 		return id;
 	}
+	
+	public boolean isVisited() {
+		return visited;
+	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setVisited(boolean visited) {
+		this.visited = visited;
 	}
 	
 }

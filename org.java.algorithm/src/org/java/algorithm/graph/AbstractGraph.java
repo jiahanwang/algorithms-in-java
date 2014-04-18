@@ -24,5 +24,11 @@ public abstract class AbstractGraph<V, E> implements Graph<V, E> {
         }
         return modified;
 	}
+
+	@Override
+	public Graph<V, E> clone(){
+		throw new UnsupportedOperationException();
+		
+	}
 	
 }
