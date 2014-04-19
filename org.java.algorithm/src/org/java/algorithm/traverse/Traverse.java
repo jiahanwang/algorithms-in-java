@@ -6,8 +6,13 @@ import java.util.*;
 
 public class Traverse {
 	
-	public static <V, E> List<V> bfs(Graph<V, E> graph, V src, V des, Comparator<? super V > comparator){
-		if(graph ==  null || src == null){
+	
+	private enum TraversalKind{
+		BFS, DFS;
+	}
+	
+	private static <V, E> List<V> traverse(Graph<V, E> graph, V src, V des, Comparator<? super V > comparator, TraversalKind indicator){
+		if(graph == null || src == null){
 			throw new NullPointerException("Graph or source vertex is null");
 		}
 		if(!graph.containsVertex(src)){
@@ -21,11 +26,22 @@ public class Traverse {
 		for(V vertex : graph.getVertices()){
 			traversalMarks.put(vertex, false);
 		}
+		// declare the list to be returned
 		List<V> traversalList = new LinkedList<V>();
-		Queue<V> queue = new LinkedList<V>();
-		queue.add(src);
-		while(!queue.isEmpty()){
-			V vertex = queue.poll();
+		// declare extra memory to control the traversal
+		LinkedList<V> memory = new LinkedList<V>();
+		memory.addLast(src);
+		// if DFS, reverse the comparator
+		if(indicator == TraversalKind.DFS){
+			comparator  = Collections.reverseOrder(comparator);
+		}
+		while(!memory.isEmpty()){
+			V vertex;
+			if(indicator == TraversalKind.BFS){
+				vertex = memory.pollFirst();
+			}else{
+				vertex = memory.pollLast();
+			}
 			traversalMarks.put(vertex,true);
 			traversalList.add(vertex);
 			// encounter the destination return
@@ -37,12 +53,17 @@ public class Traverse {
 				Collections.sort(adjacentVertices, comparator);
 			}
 			for(V adjacentVertex: adjacentVertices){
-				if(traversalMarks.get(adjacentVertex) == false && !queue.contains(adjacentVertex)){
-					queue.add(adjacentVertex);
+				if(traversalMarks.get(adjacentVertex) == false && !memory.contains(adjacentVertex)){
+					memory.addLast(adjacentVertex);
 				}
 			}
 		}
 		return Collections.unmodifiableList(traversalList);
+	}
+	
+	
+	public static <V, E> List<V> bfs(Graph<V, E> graph, V src, V des, Comparator<? super V > comparator){
+		return traverse(graph, src, des, comparator, TraversalKind.BFS);
 	}
 	
 	public static <V, E> List<V> bfs(Graph<V, E> graph, V source, Comparator<? super V > c){
@@ -58,44 +79,7 @@ public class Traverse {
 	}
 	
 	public static <V, E> List<V> dfs(Graph<V, E> graph, V src, V des, Comparator<? super V > comparator){
-		if(graph ==  null || src == null){
-			throw new NullPointerException("Graph or source vertex is null");
-		}
-		if(!graph.containsVertex(src)){
-			throw new IllegalArgumentException("Source vertex doesn't exist in graph");
-		}
-		if(des != null && !graph.containsVertex(des)){
-			throw new IllegalArgumentException("Destination vertex doesn't exist in graph");
-		}
-		// need extra space to store marks for traversal, boolean for instance 
-		Map<V, Boolean> traversalMarks = new HashMap<V, Boolean>();
-		for(V vertex : graph.getVertices()){
-			traversalMarks.put(vertex, false);
-		}
-		// reverse the comparator
-		comparator = Collections.reverseOrder(comparator);
-		List<V> traversalList = new LinkedList<V>();
-		Stack<V> stack = new Stack<V>();
-		stack.push(src);
-		while(!stack.isEmpty()){
-			V vertex = stack.pop();
-			traversalMarks.put(vertex,true);
-			traversalList.add(vertex);
-			// encounter the destination return
-			if(des!= null && vertex.equals(des)){
-				return Collections.unmodifiableList(traversalList);
-			}
-			List<V> adjacentVertices = new LinkedList<V>(graph.adjacentVertices(vertex));
-			if(comparator != null){
-				Collections.sort(adjacentVertices, comparator);
-			}
-			for(V adjacentVertex: adjacentVertices){
-				if(traversalMarks.get(adjacentVertex) == false && !stack.contains(adjacentVertex)){
-					stack.push(adjacentVertex);
-				}
-			}
-		}
-		return Collections.unmodifiableList(traversalList);
+		return traverse(graph, src, des, comparator, TraversalKind.DFS);
 	}
 	
 	public static <V, E> List<V> dfs(Graph<V, E> graph, V source, Comparator<? super V > c){

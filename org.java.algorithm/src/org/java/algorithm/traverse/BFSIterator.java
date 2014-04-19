@@ -5,13 +5,9 @@ import java.util.*;
 
 
 public class BFSIterator<V, E> extends AbstractGraphIterator<V, E>{
-
-	private Queue<V> queue;
 	
 	BFSIterator(Graph<V, E> graph, V src, V des, Comparator<? super V> c){
 		super(graph, src, des, c);
-		queue = new LinkedList<V>();
-		queue.add(src);
 	}
 	
 	BFSIterator(Graph<V, E> graph, V src, Comparator<? super V> c){
@@ -28,7 +24,7 @@ public class BFSIterator<V, E> extends AbstractGraphIterator<V, E>{
 	
 	@Override
 	public boolean hasNext() {
-		return !getDesEncountered() && !queue.isEmpty();
+		return !getDesEncountered() && !isEmpty();
 	}
 
 	@Override
@@ -36,7 +32,7 @@ public class BFSIterator<V, E> extends AbstractGraphIterator<V, E>{
 		if (!hasNext()){
             throw new NoSuchElementException();
 		}
-		V vertex = queue.poll();
+		V vertex = pollFirst();
 		setMark(vertex, true);
 		if(getDestination() != null && vertex.equals(getDestination())){
 			setDesEncountered(true);
@@ -47,8 +43,8 @@ public class BFSIterator<V, E> extends AbstractGraphIterator<V, E>{
 			Collections.sort(adjacentVertices, getComparator());
 		}
 		for(V adjacentVertex : adjacentVertices){
-			if(getMark(adjacentVertex) == false && !queue.contains(adjacentVertex)){
-				queue.add(adjacentVertex);
+			if(getMark(adjacentVertex) == false && !contains(adjacentVertex)){
+				addLast(adjacentVertex);
 			}
 		}
 		return vertex;

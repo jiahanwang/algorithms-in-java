@@ -7,10 +7,32 @@ import org.java.algorithm.graph.Graph;
 public abstract class AbstractGraphIterator<V, E> implements Iterator<V>{
 	
 	private Map<V, Boolean> traversalMarks;
+	private LinkedList<V> traversalMemory;
 	private final Graph<V, E> graph;
 	private V destination;
 	private Comparator<? super V> comparator;
 	private boolean desEncountered = false;
+	
+	protected V pollFirst(){
+		return traversalMemory.pollFirst();
+	}
+	
+	protected V pollLast(){
+		return traversalMemory.pollLast();
+		
+	}
+	
+	protected boolean addLast(V vertex){
+		return traversalMemory.add(vertex);
+	}
+	
+	protected boolean isEmpty(){
+		return traversalMemory.isEmpty();
+	}
+	
+	protected boolean contains(V vertex){
+		return this.traversalMemory.contains(vertex);
+	}
 	
 	public AbstractGraphIterator(Graph<V, E> graph, V src, V des, Comparator<? super V> c){
 		if(graph ==  null || src == null){
@@ -22,10 +44,12 @@ public abstract class AbstractGraphIterator<V, E> implements Iterator<V>{
 		if(des != null && !graph.containsVertex(des)){
 			throw new IllegalArgumentException("Destination vertex doesn't exist in graph");
 		}
-		setDestination(des);
-		setComparator(c);
+		this.traversalMemory = new LinkedList<V>();
+		this.traversalMemory.add(src);
 		this.graph = graph;
-		traversalMarks = new HashMap<V, Boolean>();
+		this.destination = des;
+		this.comparator = c;
+		this.traversalMarks = new HashMap<V, Boolean>();
 		for(V vertex : graph.getVertices()){
 			traversalMarks.put(vertex, false);
 		}

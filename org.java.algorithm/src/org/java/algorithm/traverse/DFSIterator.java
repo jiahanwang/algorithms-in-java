@@ -6,16 +6,12 @@ import java.util.*;
 
 public class DFSIterator<V, E> extends AbstractGraphIterator<V, E>{
 
-	private Stack<V> stack;
-
 	DFSIterator(Graph<V, E> graph, V src, V des, Comparator<? super V> c){
 		super(graph, src, des, c);
 		// reverse comparator
 		if(c != null){
 			setComparator(Collections.reverseOrder(c));
 		}
-		stack = new Stack<V>();
-		stack.push(src);
 	}
 	
 	DFSIterator(Graph<V, E> graph, V src, Comparator<? super V> c){
@@ -32,7 +28,7 @@ public class DFSIterator<V, E> extends AbstractGraphIterator<V, E>{
 	
 	@Override
 	public boolean hasNext() {
-		return !getDesEncountered() && !stack.isEmpty();
+		return !getDesEncountered() && !isEmpty();
 	}
 
 	@Override
@@ -40,7 +36,7 @@ public class DFSIterator<V, E> extends AbstractGraphIterator<V, E>{
 		if (!hasNext()){
             throw new NoSuchElementException();
 		}
-		V vertex = stack.pop();
+		V vertex = pollLast();
 		setMark(vertex, true);
 		if(getDestination() != null && vertex.equals(getDestination())){
 			setDesEncountered(true);
@@ -51,8 +47,8 @@ public class DFSIterator<V, E> extends AbstractGraphIterator<V, E>{
 			Collections.sort(adjacentVertices, getComparator());
 		}
 		for(V adjacentVertex : adjacentVertices){
-			if(getMark(adjacentVertex) == false && !stack.contains(adjacentVertex)){
-				stack.push(adjacentVertex);
+			if(getMark(adjacentVertex) == false && !contains(adjacentVertex)){
+				addLast(adjacentVertex);
 			}
 		}
 		return vertex;
