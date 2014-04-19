@@ -5,18 +5,20 @@ import static org.junit.Assert.*;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
-import org.java.algorithm.graph.SimpleGraph;
+
+import org.java.algorithm.graph.MultiGraph;
 import org.junit.Before;
 import org.junit.Test;
 
-public class SimpleGraphTest {
+public class MultiGraphTest {
 	
-	private SimpleGraph<String, String> graph;
+	private MultiGraph<String, String> graph;
 
 	@Before
 	public void setUp() throws Exception {
-		graph = new SimpleGraph<String, String>();
+		graph = new MultiGraph<String, String>();
 		graph.addEdge("edge1-2", "1", "2");
+		graph.addEdge("edge1-2-2", "1", "2");
 		graph.addEdge("edge1-3", "1", "3");
 		graph.addEdge("edge2-3", "2", "3");
 		graph.addEdge("edge3-4", "3", "4");
@@ -27,10 +29,10 @@ public class SimpleGraphTest {
 	@Test
 	public void testAddEdge() {
 		assertTrue("Add a edge with no vertices existing", graph.addEdge("edge7-8", "7", "8"));
-		assertTrue("Add a edge with one vertex existing", graph.addEdge("edge497", "4", "9"));
+		assertTrue("Add a edge with one vertex existing", graph.addEdge("edge4-9", "4", "9"));
 		assertTrue("Add a edge with both vertices existing", graph.addEdge("edge5-6", "5", "6"));
+		assertTrue("Add a multiple edge", graph.addEdge("edge1-2-3", "1", "2"));
 		assertFalse("Add a edge whose identity existed", graph.addEdge("edge1-2", "4", "5"));
-		assertFalse("Add a edge with both vertices existing but a multiple edge)", graph.addEdge("edge1-2-2", "1", "2"));
 		assertFalse("Add a self loop", graph.addEdge("edge3-3", "3", "3"));	
 	}
 
@@ -59,7 +61,7 @@ public class SimpleGraphTest {
 
 	@Test
 	public void testNumOfEdges() {
-		assertEquals("Number of edges", graph.numOfEdges(), 4);
+		assertEquals("Number of edges", graph.numOfEdges(), 5);
 	}
 
 	@Test
@@ -133,7 +135,7 @@ public class SimpleGraphTest {
 
 	@Test
 	public void testDegree() {
-		assertEquals("Get the right degree", graph.degree("1"), 2);
+		assertEquals("Get the degree", graph.degree("1"), 3);
 		assertEquals("Vertex doesn't exist", graph.degree("7"), -1);
 	}
 
