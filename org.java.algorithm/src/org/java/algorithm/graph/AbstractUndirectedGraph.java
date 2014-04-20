@@ -1,54 +1,49 @@
 package org.java.algorithm.graph;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-public class AbstractUndirectedGraph<V, E>
+public abstract class AbstractUndirectedGraph<V, E>
 			extends AbstractGraph<V, E>
 			implements UndirectedGraph<V, E> {
 	
 	// implemented in adjacent list by default
-	Map<V, Set<E>>  vertices;
-	Map<E, Pair<V>> edges;
+	private Map<V, Set<E>>  vertices;
+	private Map<E, Pair<V>> edges;
+	private boolean allowingMultiEdges = false;
+	private boolean allowingLoops = false;
 	
-	public AbstractUndirectedGraph(){
+	public AbstractUndirectedGraph(boolean multiEdges, boolean loops){
 		super();
 		vertices = new HashMap<V, Set<E>>();
 		edges = new HashMap<E, Pair<V>>();
+		allowingMultiEdges = multiEdges;
+		allowingLoops = loops;
 	}
 
-	@Override
-	public boolean addEdge(E edge, V vertex1, V vertex2) {
+	public boolean addEdge(E edge, V vertex1, V vertex2){
 		if(edge == null || vertex1 == null || vertex2 == null) 
-    		throw new NullPointerException("Edges cannot contain null values");
+    		throw new IllegalArgumentException("Edges cannot contain null values");
 		if(edges.containsKey(edge)){
 			return false;
 		}
-		// allow loops and multiple edges by default
+		if(!this.allowingLoops){
+			if(vertex1.equals(vertex2)){
+				return false;
+			}
+		}
+		if(!this.allowingMultiEdges){
+			if(areAdjacent(vertex1, vertex2)){
+				return false;
+			}
+		}
+		addVertex(vertex1);
+		vertices.get(vertex1).add(edge);
+		addVertex(vertex2);
+		vertices.get(vertex2).add(edge);
 		edges.put(edge, new Pair<V>(vertex1, vertex2));
-		if(vertices.containsKey(vertex1)){
-			vertices.get(vertex1).add(edge);
-		}else{
-			Set<E> newSet= new HashSet<E>();
-			newSet.add(edge);
-			vertices.put(vertex1, newSet);
-		}
-		if(vertices.containsKey(vertex2)){
-			vertices.get(vertex2).add(edge);
-		}else{
-			Set<E> newSet = new HashSet<E>();
-			newSet.add(edge);
-			vertices.put(vertex2, newSet);
-		}
 		return true;
-	}
+	};
 
-	@Override
 	public boolean addVertex(V vertex) {
 		if(vertex == null) 
     		throw new NullPointerException("Vertices cannot contain null values");
@@ -128,14 +123,14 @@ public class AbstractUndirectedGraph<V, E>
 		if(!vertices.containsKey(vertex)){
 			return null;
 		}
-		Collection<V> verticesList =  new LinkedList<V>();
+		Set<V> verticesSet =  new HashSet<V>();
 		for(E edge : vertices.get(vertex)){
 			V v  = opposite(edge, vertex);
 			if(v != null){
-				verticesList.add(v);
+				verticesSet.add(v);
 			}
 		}
-		return Collections.unmodifiableCollection(verticesList);
+		return Collections.unmodifiableCollection(verticesSet);
 	}
 
 	@Override
@@ -146,7 +141,13 @@ public class AbstractUndirectedGraph<V, E>
 			return Collections.unmodifiableCollection(vertices.get(vertex));
 		}
 	}
-
+	/**
+	 * Test if two vertices are adjacent
+	 * @param vertex1 one vertex
+	 * @param vertex2 another vertex
+	 * @return <code>false</code> if two vertices are not adjacent or any of the two vertices doesn't exist in the graph; <code>true</code> if two vertices are adjacent
+	 * 
+	 * */
 	@Override
 	public boolean areAdjacent(V vertex1, V vertex2) {
 		if(! vertices.containsKey(vertex1) || ! vertices.containsKey(vertex2)){
