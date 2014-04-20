@@ -79,26 +79,26 @@ public class MultiGraphTest {
 	@Test
 	public void testGetVertices() {
 		Collection<String> vertices = new LinkedList<String>(Arrays.asList(new String[]{"1", "2", "3", "4", "5", "6"}));
-		assertTrue("Get all vertices", graph.getVertices().containsAll(vertices));
+		assertTrue("Get all vertices", graph.getVertices().containsAll(vertices) && vertices.containsAll(graph.getVertices()));
 	}
 
 	@Test
 	public void testGetEdges() {
-		Collection<String> edges = new LinkedList<String>(Arrays.asList(new String[]{"edge1-2", "edge1-3", "edge2-3", "edge3-4"}));
-		assertTrue("Get all edges", graph.getEdges().containsAll(edges));
+		Collection<String> edges = new LinkedList<String>(Arrays.asList(new String[]{"edge1-2", "edge1-2-2","edge1-3", "edge2-3", "edge3-4"}));
+		assertTrue("Get all edges", graph.getEdges().containsAll(edges) && edges.containsAll(graph.getEdges()));
 	}
 
 	@Test
 	public void testAdjacentVertices() {
 		Collection<String> adjacentVertices = new LinkedList<String>(Arrays.asList(new String[]{"2", "3"}));
-		assertTrue("Get adjacent vertices", graph.adjacentVertices("1").containsAll(adjacentVertices));
+		assertTrue("Get adjacent vertices", graph.adjacentVertices("1").containsAll(adjacentVertices) && adjacentVertices.containsAll(graph.adjacentVertices("1")));
 		assertNull("Vertex doesn't exist", graph.adjacentVertices("7"));
 	}
 
 	@Test
 	public void testIncidentEdges() {
-		Collection<String> incidentEdges = new LinkedList<String>(Arrays.asList(new String[]{"edge1-2", "edge1-3"}));
-		assertTrue("Get adjacent vertices", graph.incidentEdges("1").containsAll(incidentEdges));
+		Collection<String> incidentEdges = new LinkedList<String>(Arrays.asList(new String[]{"edge1-2", "edge1-2-2", "edge1-3"}));
+		assertTrue("Get incident edges", graph.incidentEdges("1").containsAll(incidentEdges) && incidentEdges.containsAll(graph.incidentEdges("1")));
 		assertNull("Vertex doesn't exist", graph.incidentEdges("7"));
 	}
 
@@ -145,8 +145,8 @@ public class MultiGraphTest {
 	}
 
 	@Test
-	public void testRemoveAllEdgs() {
-		assertTrue("Remove three edges including one that doesn't exist", graph.removeAllEdgs(Arrays.asList(new String[]{"edge1-2", "edge2-3", "edge7-8"})));
+	public void testRemoveAllEdges() {
+		assertTrue("Remove three edges including one that doesn't exist", graph.removeAllEdges(Arrays.asList(new String[]{"edge1-2", "edge2-3", "edge7-8"})));
 		//System.out.println(graph);
 	}
 

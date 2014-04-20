@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
+
 import org.java.algorithm.graph.SimpleGraph;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,10 +28,10 @@ public class SimpleGraphTest {
 	@Test
 	public void testAddEdge() {
 		assertTrue("Add a edge with no vertices existing", graph.addEdge("edge7-8", "7", "8"));
-		assertTrue("Add a edge with one vertex existing", graph.addEdge("edge497", "4", "9"));
+		assertTrue("Add a edge with one vertex existing", graph.addEdge("edge4-9", "4", "9"));
 		assertTrue("Add a edge with both vertices existing", graph.addEdge("edge5-6", "5", "6"));
 		assertFalse("Add a edge whose identity existed", graph.addEdge("edge1-2", "4", "5"));
-		assertFalse("Add a edge with both vertices existing but a multiple edge)", graph.addEdge("edge1-2-2", "1", "2"));
+		assertFalse("Add a edge with both vertices existing but a multiple edge", graph.addEdge("edge1-2-2", "1", "2"));
 		assertFalse("Add a self loop", graph.addEdge("edge3-3", "3", "3"));	
 	}
 
@@ -77,26 +78,26 @@ public class SimpleGraphTest {
 	@Test
 	public void testGetVertices() {
 		Collection<String> vertices = new LinkedList<String>(Arrays.asList(new String[]{"1", "2", "3", "4", "5", "6"}));
-		assertTrue("Get all vertices", graph.getVertices().containsAll(vertices));
+		assertTrue("Get all vertices", graph.getVertices().containsAll(vertices) && vertices.containsAll(graph.getVertices()));
 	}
 
 	@Test
 	public void testGetEdges() {
 		Collection<String> edges = new LinkedList<String>(Arrays.asList(new String[]{"edge1-2", "edge1-3", "edge2-3", "edge3-4"}));
-		assertTrue("Get all edges", graph.getEdges().containsAll(edges));
+		assertTrue("Get all edges", graph.getEdges().containsAll(edges) && edges.containsAll(graph.getEdges()));
 	}
 
 	@Test
 	public void testAdjacentVertices() {
 		Collection<String> adjacentVertices = new LinkedList<String>(Arrays.asList(new String[]{"2", "3"}));
-		assertTrue("Get adjacent vertices", graph.adjacentVertices("1").containsAll(adjacentVertices));
+		assertTrue("Get adjacent vertices", graph.adjacentVertices("1").containsAll(adjacentVertices) && adjacentVertices.containsAll(graph.adjacentVertices("1")));
 		assertNull("Vertex doesn't exist", graph.adjacentVertices("7"));
 	}
 
 	@Test
 	public void testIncidentEdges() {
 		Collection<String> incidentEdges = new LinkedList<String>(Arrays.asList(new String[]{"edge1-2", "edge1-3"}));
-		assertTrue("Get adjacent vertices", graph.incidentEdges("1").containsAll(incidentEdges));
+		assertTrue("Get incident edges", graph.incidentEdges("1").containsAll(incidentEdges) && incidentEdges.containsAll(graph.incidentEdges("1")));
 		assertNull("Vertex doesn't exist", graph.incidentEdges("7"));
 	}
 
@@ -143,8 +144,8 @@ public class SimpleGraphTest {
 	}
 
 	@Test
-	public void testRemoveAllEdgs() {
-		assertTrue("Remove three edges including one that doesn't exist", graph.removeAllEdgs(Arrays.asList(new String[]{"edge1-2", "edge2-3", "edge7-8"})));
+	public void testRemoveAllEdges() {
+		assertTrue("Remove three edges including one that doesn't exist", graph.removeAllEdges(Arrays.asList(new String[]{"edge1-2", "edge2-3", "edge7-8"})));
 		//System.out.println(graph);
 	}
 
