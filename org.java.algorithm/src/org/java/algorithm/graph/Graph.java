@@ -11,7 +11,7 @@ public interface Graph<V, E> {
 	
 	boolean removeEdge(E edge);
 	
-	boolean removeAllEdgs(Collection<? extends E> edges);
+	boolean removeAllEdges(Collection<? extends E> edges);
 
 	boolean removeVertex(V vertex);
 	
@@ -41,11 +41,6 @@ public interface Graph<V, E> {
 	boolean areAdjacent(V vertex1, V vertex2);
 	
 	boolean areIncident(V vertex, E edge);
-	
-	
-	Collection<V> endVertices(E edge);
-	
-	V opposite(E edge, V vertex);
 	
 
 }

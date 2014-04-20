@@ -7,8 +7,7 @@ public abstract class AbstractGraph<V, E> implements Graph<V, E> {
 	protected AbstractGraph() {
 	}
 
-	@Override
-	public boolean removeAllEdgs(Collection<? extends E> edges) {
+	public boolean removeAllEdges(Collection<? extends E> edges) {
 		boolean modified = false;
 		for(E edge : edges){
 			modified |= removeEdge(edge);
@@ -16,7 +15,6 @@ public abstract class AbstractGraph<V, E> implements Graph<V, E> {
 		return modified;
 	}
 
-	@Override
 	public boolean removeAllVertices(Collection<? extends V> vertices) {
 		boolean modified = false;
         for (V vertex : vertices) {

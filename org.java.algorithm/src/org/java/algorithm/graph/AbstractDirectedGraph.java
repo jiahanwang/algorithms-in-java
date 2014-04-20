@@ -176,7 +176,7 @@ public class AbstractDirectedGraph<V, E>
 	
 	/**
 	 * Test if two vertices are adjacent, which means if there is an edge outgoing from <i>s</i> to <i>u</i> and another 
-	 * edge  outgoing from <i>u</i> to <i>s</i> then they are adjacent.
+	 * edge outgoing from <i>u</i> to <i>s</i> then they are adjacent.
 	 * 
 	 * @param s one vertex
 	 * @param t another vertex
@@ -294,4 +294,14 @@ public class AbstractDirectedGraph<V, E>
 		return successful;
 	}
 	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		for(V vertex: vertices.keySet()){
+			builder.append(vertex).append(": in").append(vertices.get(vertex)[INCOMING].keySet())
+								  .append(" out").append(vertices.get(vertex)[OUTGOING].keySet()).append("\n");
+		}
+		return builder.toString();
+	}
+
 }
