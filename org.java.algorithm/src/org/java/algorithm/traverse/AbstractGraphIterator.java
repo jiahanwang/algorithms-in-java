@@ -13,27 +13,6 @@ public abstract class AbstractGraphIterator<V, E> implements Iterator<V>{
 	private Comparator<? super V> comparator;
 	private boolean desEncountered = false;
 	
-	protected V pollFirst(){
-		return traversalMemory.pollFirst();
-	}
-	
-	protected V pollLast(){
-		return traversalMemory.pollLast();
-		
-	}
-	
-	protected boolean addLast(V vertex){
-		return traversalMemory.add(vertex);
-	}
-	
-	protected boolean isEmpty(){
-		return traversalMemory.isEmpty();
-	}
-	
-	protected boolean contains(V vertex){
-		return this.traversalMemory.contains(vertex);
-	}
-	
 	public AbstractGraphIterator(Graph<V, E> graph, V src, V des, Comparator<? super V> c){
 		if(graph ==  null || src == null){
 			throw new NullPointerException("Graph or source vertex is null");
@@ -91,7 +70,27 @@ public abstract class AbstractGraphIterator<V, E> implements Iterator<V>{
 		this.desEncountered = desEncountered;
 	}
 	
-	@Override
+	protected V pollFirst(){
+		return traversalMemory.pollFirst();
+	}
+	
+	protected V pollLast(){
+		return traversalMemory.pollLast();
+		
+	}
+	
+	protected boolean addLast(V vertex){
+		return traversalMemory.add(vertex);
+	}
+	
+	protected boolean isEmpty(){
+		return traversalMemory.isEmpty();
+	}
+	
+	protected boolean contains(V vertex){
+		return this.traversalMemory.contains(vertex);
+	}
+	
 	public void remove(){
         throw new UnsupportedOperationException();
     }
