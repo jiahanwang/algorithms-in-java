@@ -26,12 +26,10 @@ public class DFSIterator<V, E> extends AbstractGraphIterator<V, E>{
 		this(graph, src, null, null);
 	}
 	
-	@Override
 	public boolean hasNext() {
 		return !getDesEncountered() && !isEmpty();
 	}
 
-	@Override
 	public V next() {
 		if (!hasNext()){
             throw new NoSuchElementException();

@@ -6,7 +6,6 @@ import java.util.*;
 
 public class Traverse {
 	
-	
 	private enum TraversalKind{
 		BFS, DFS;
 	}
