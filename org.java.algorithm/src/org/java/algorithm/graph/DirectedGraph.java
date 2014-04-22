@@ -2,7 +2,7 @@ package org.java.algorithm.graph;
 
 import java.util.Collection;
 
-public interface DirectedGraph<V, E> {
+public interface DirectedGraph<V, E> extends Graph<V, E>{
 	
 	V destination(E edge);
 	

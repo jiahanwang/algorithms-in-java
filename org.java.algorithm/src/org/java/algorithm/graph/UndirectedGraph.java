@@ -2,7 +2,7 @@ package org.java.algorithm.graph;
 
 import java.util.Collection;
 
-public interface UndirectedGraph<V, E> {
+public interface UndirectedGraph<V, E> extends Graph<V, E>{
 	
 	int degree(V vertex);
 	
