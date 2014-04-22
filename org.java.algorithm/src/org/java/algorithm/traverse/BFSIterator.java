@@ -6,19 +6,19 @@ import java.util.*;
 
 public class BFSIterator<V, E> extends AbstractGraphIterator<V, E>{
 	
-	BFSIterator(Graph<V, E> graph, V src, V des, Comparator<? super V> c){
+	public BFSIterator(Graph<V, E> graph, V src, V des, Comparator<? super V> c){
 		super(graph, src, des, c);
 	}
 	
-	BFSIterator(Graph<V, E> graph, V src, Comparator<? super V> c){
+	public BFSIterator(Graph<V, E> graph, V src, Comparator<? super V> c){
 		this(graph, src, null, c);
 	}
 	
-	BFSIterator(Graph<V, E> graph, V src, V des){
+	public BFSIterator(Graph<V, E> graph, V src, V des){
 		this(graph, src, des, null);
 	}
 	
-	BFSIterator(Graph<V, E> graph, V src){
+	public BFSIterator(Graph<V, E> graph, V src){
 		this(graph, src, null, null);
 	}
 	

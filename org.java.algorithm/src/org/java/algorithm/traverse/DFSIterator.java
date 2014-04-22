@@ -6,7 +6,7 @@ import java.util.*;
 
 public class DFSIterator<V, E> extends AbstractGraphIterator<V, E>{
 
-	DFSIterator(Graph<V, E> graph, V src, V des, Comparator<? super V> c){
+	public DFSIterator(Graph<V, E> graph, V src, V des, Comparator<? super V> c){
 		super(graph, src, des, c);
 		// reverse comparator
 		if(c != null){
@@ -14,15 +14,15 @@ public class DFSIterator<V, E> extends AbstractGraphIterator<V, E>{
 		}
 	}
 	
-	DFSIterator(Graph<V, E> graph, V src, Comparator<? super V> c){
+	public DFSIterator(Graph<V, E> graph, V src, Comparator<? super V> c){
 		this(graph, src, null, c);
 	}
 	
-	DFSIterator(Graph<V, E> graph, V src, V des){
+	public DFSIterator(Graph<V, E> graph, V src, V des){
 		this(graph, src, des, null);
 	}
 	
-	DFSIterator(Graph<V, E> graph, V src){
+	public DFSIterator(Graph<V, E> graph, V src){
 		this(graph, src, null, null);
 	}
 	
