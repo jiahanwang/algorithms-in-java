@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.*;
 
 import org.java.algorithm.graph.*;
+import org.java.algorithm.traverse.BFSInLevelsIterator;
 import org.java.algorithm.traverse.BFSIterator;
 import org.java.algorithm.traverse.DFSIterator;
 import org.java.algorithm.traverse.Traverse;
@@ -69,6 +70,59 @@ public class UndirectedGraphTraverseTest {
 				return -a .compareTo(b);
 			}
 		}), resultList);
+	}
+	
+	@Test
+	public void testSimpleGraphBfsInLevels(){
+		List<List<String>> idealList = new LinkedList<List<String>>();
+		idealList.add(Arrays.asList(new String[]{"1"}));
+		idealList.add(Arrays.asList(new String[]{"5", "3", "2"}));
+		idealList.add(Arrays.asList(new String[]{"4"}));
+		List<List<String>> actualList = Traverse.bfsInLevels(graph, "1", new Comparator<String>(){
+			public int compare(String a, String b){
+				return - a.compareTo(b);
+			}
+		});
+		for(int i = 0; i < idealList.size(); i++){
+			assertEquals("SimpleGraph Bfs In Levels", actualList.get(i), idealList.get(i));
+		}
+	}
+	
+	@Test
+	public void testSimpleGraphBfsInLevelsWithoutComparator(){
+		List<List<String>> resultList = new LinkedList<List<String>>();
+		resultList.add(Arrays.asList(new String[]{"1"}));
+		resultList.add(Arrays.asList(new String[]{"2", "3", "5"}));
+		resultList.add(Arrays.asList(new String[]{"4"}));
+		assertEquals("SimpleGraph Bfs InLevels WithoutComparator", Traverse.bfsInLevels(graph, "1"), resultList);
+	}
+	
+	@Test
+	public void testSimpleGraphBfsInLevelsIterator(){
+		List<List<String>> idealList = new LinkedList<List<String>>();
+		//idealList.add(Arrays.asList(new String[]{"1"}));
+		idealList.add(Arrays.asList(new String[]{"5", "3", "2"}));
+		idealList.add(Arrays.asList(new String[]{"4"}));
+		BFSInLevelsIterator<String, String> iterator = new BFSInLevelsIterator<String, String>(graph, "1", new Comparator<String>(){
+			public int compare(String a, String b){
+				return - a.compareTo(b);
+			}
+		});
+		for(int i = 0; i < idealList.size(); i++){
+			assertEquals("SimpleGraph Bfs In Levels", iterator.nextLevel(), idealList.get(i));
+		}
+	}
+	
+	@Test
+	public void testSimpleGraphBfsInLevelsIteratorWithoutComparator(){
+		List<List<String>> idealList = new LinkedList<List<String>>();
+		//idealList.add(Arrays.asList(new String[]{"1"}));
+		idealList.add(Arrays.asList(new String[]{"2", "3", "5"}));
+		idealList.add(Arrays.asList(new String[]{"4"}));
+		BFSInLevelsIterator<String, String> iterator = new BFSInLevelsIterator<String, String>(graph, "1");
+		for(int i = 0; i < idealList.size(); i++){
+			assertEquals("SimpleGraph Bfs In Levels", iterator.nextLevel(), idealList.get(i));
+		}
 	}
 
 	@Test
