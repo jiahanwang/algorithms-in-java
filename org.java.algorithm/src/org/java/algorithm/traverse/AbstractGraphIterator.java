@@ -83,6 +83,10 @@ public abstract class AbstractGraphIterator<V, E> implements Iterator<V>{
 		return traversalMemory.add(vertex);
 	}
 	
+	protected boolean addLevel(Collection<V> vertices){
+		return traversalMemory.addAll(vertices);
+	}
+	
 	protected boolean isEmpty(){
 		return traversalMemory.isEmpty();
 	}

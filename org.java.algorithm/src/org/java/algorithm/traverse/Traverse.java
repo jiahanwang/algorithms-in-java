@@ -45,9 +45,9 @@ public class Traverse {
 			}
 			traversalMarks.put(vertex,true);
 			traversalList.add(vertex);
-			// encounter the destination return
+			// encounter the destination, return
 			if(des!= null && vertex.equals(des)){
-				return Collections.unmodifiableList(traversalList);
+				return traversalList;
 			}
 			List<V> adjacentVertices = new LinkedList<V>(graph.adjacentVertices(vertex));
 			if(comparator != null){
@@ -61,10 +61,6 @@ public class Traverse {
 		}
 		return traversalList;
 	}
-	
-	/* public static <V, E> List<List<V>> bfsInLevels(Graph<V, E> graph, V src, V des, Comparator<? super V > comparator){
-		return null;//traverse(graph, src, des, comparator, TraversalKind.BFS);
-	}*/
 	
 	public static <V, E> List<V> bfs(Graph<V, E> graph, V src, V des, Comparator<? super V > comparator){
 		return traverse(graph, src, des, comparator, TraversalKind.BFS);
@@ -97,6 +93,50 @@ public class Traverse {
 	public static <V, E> List<V> dfs(Graph<V, E> graph, V source){
 		return dfs(graph, source, null, null);
 	}
+	
+	public static <V, E> List<List<V>> bfsInLevels(Graph<V, E> graph, V src, Comparator<? super V > comparator){
+		if(graph == null || src == null){
+			throw new NullPointerException("Graph or source vertex is null");
+		}
+		if(!graph.containsVertex(src)){
+			throw new IllegalArgumentException("Source vertex doesn't exist in graph");
+		}
+		// need extra space to store marks for traversal, boolean for instance 
+		Map<V, Boolean> traversalMarks = new HashMap<V, Boolean>();
+		for(V vertex : graph.getVertices()){
+			traversalMarks.put(vertex, false);
+		}
+		// declare the list to be returned
+		List<List<V>> traversalList = new LinkedList<List<V>>();
+		// add the first level
+		traversalList.add(new LinkedList<V>());
+		// visit the root
+		traversalMarks.put(src, true);
+		traversalList.get(0).add(src);
+		for(int i = 0; !traversalList.get(i).isEmpty(); i++){
+			traversalList.add(new LinkedList<V>());
+			// sort the vertices according to comparator, if comparator is null, then natural ordering is used
+			Collections.sort(traversalList.get(i), comparator);
+			for(V vertex : traversalList.get(i)){
+				List<V> adjacentVertices = new LinkedList<V>(graph.adjacentVertices(vertex));
+				Collections.sort(adjacentVertices, comparator);
+				for(V adjacentVertex: adjacentVertices){
+					if(traversalMarks.get(adjacentVertex) == false){
+						traversalList.get(i + 1).add(adjacentVertex);
+						// visit the vertex
+						traversalMarks.put(adjacentVertex, true);
+					}
+				}
+			}
+		}
+		traversalList.remove(traversalList.size() - 1);
+		return traversalList;
+	}
+
+	public static <V, E> List<List<V>> bfsInLevels(Graph<V, E> graph, V src){
+		return bfsInLevels(graph, src, null);
+	}
+	
 	
 	/**
 	 * Get the topological order of a directed acyclic graph (DAG)
