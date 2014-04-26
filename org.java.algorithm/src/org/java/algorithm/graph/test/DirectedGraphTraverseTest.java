@@ -1,14 +1,14 @@
-package org.java.algorithm.test;
+package org.java.algorithm.graph.test;
 
 import static org.junit.Assert.*;
 
 import java.util.*;
 
-import org.java.algorithm.graph.*;
-import org.java.algorithm.traverse.BFSInLevelsIterator;
-import org.java.algorithm.traverse.BFSIterator;
-import org.java.algorithm.traverse.DFSIterator;
-import org.java.algorithm.traverse.Traverse;
+import org.java.algorithm.graph.basics.*;
+import org.java.algorithm.graph.traverse.BFSInLevelsIterator;
+import org.java.algorithm.graph.traverse.BFSIterator;
+import org.java.algorithm.graph.traverse.DFSIterator;
+import org.java.algorithm.graph.traverse.Traverse;
 import org.junit.Before;
 import org.junit.Test;
 

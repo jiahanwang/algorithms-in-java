@@ -1,4 +1,4 @@
-package org.java.algorithm.graph;
+package org.java.algorithm.graph.basics;
 
 public class DirectedMultiGraph<V, E> extends AbstractDirectedGraph<V, E> {
 	

@@ -1,4 +1,4 @@
-package org.java.algorithm.traverse;
+package org.java.algorithm.graph.traverse;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.java.algorithm.graph.Graph;
+import org.java.algorithm.graph.basics.Graph;
 
 public class BFSInLevelsIterator<V, E> extends AbstractGraphIterator<V, E> {
 

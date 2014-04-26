@@ -1,4 +1,4 @@
-package org.java.algorithm.graph;
+package org.java.algorithm.graph.basics;
 
 import java.util.*;
 

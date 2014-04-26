@@ -1,4 +1,4 @@
-package org.java.algorithm.test;
+package org.java.algorithm.graph.test;
 
 import static org.junit.Assert.*;
 
@@ -7,8 +7,8 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.java.algorithm.graph.SimpleDirectedGraph;
-import org.java.algorithm.traverse.Traverse;
+import org.java.algorithm.graph.basics.SimpleDirectedGraph;
+import org.java.algorithm.graph.traverse.Traverse;
 import org.junit.Before;
 import org.junit.Test;
 

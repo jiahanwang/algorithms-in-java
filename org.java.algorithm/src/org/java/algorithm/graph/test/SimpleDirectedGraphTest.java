@@ -1,27 +1,25 @@
-package org.java.algorithm.test;
+package org.java.algorithm.graph.test;
 
 import static org.junit.Assert.*;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
-import org.java.algorithm.graph.DirectedMultiGraph;
 
+import org.java.algorithm.graph.basics.SimpleDirectedGraph;
 import org.junit.Before;
 import org.junit.Test;
 
-public class DirectedMultiGraphTest {
-
-	DirectedMultiGraph<String, String> graph;
+public class SimpleDirectedGraphTest {
+	
+	SimpleDirectedGraph<String, String> graph;
 
 	@Before
 	public void setUp() throws Exception {
-		graph = new DirectedMultiGraph<String, String>();
+		graph = new SimpleDirectedGraph<String, String>();
 		graph.addEdge("edge1-2", "1", "2");
-		graph.addEdge("edge1-2-2", "1", "2");
 		graph.addEdge("edge1-3", "1", "3");
 		graph.addEdge("edge2-3", "2", "3");
-		graph.addEdge("edge2-3-2", "2", "3");
 		graph.addEdge("edge3-4", "3", "4");
 		graph.addVertex("5");
 		graph.addVertex("6");
@@ -34,7 +32,7 @@ public class DirectedMultiGraphTest {
 		assertTrue("Add a edge with both vertices existing", graph.addEdge("edge5-6", "5", "6"));
 		assertTrue("Add a reversed edge with both vertices existing", graph.addEdge("edge2-1", "2", "1"));
 		assertFalse("Add a edge whose identity existed", graph.addEdge("edge1-2", "4", "5"));
-		assertTrue("Add a multiple edge", graph.addEdge("edge1-2-3", "1", "2"));
+		assertFalse("Add a edge with both vertices existing but a multiple edge", graph.addEdge("edge1-2-2", "1", "2"));
 		assertFalse("Add a self loop", graph.addEdge("edge3-3", "3", "3"));	
 	}
 
@@ -63,7 +61,7 @@ public class DirectedMultiGraphTest {
 
 	@Test
 	public void testNumOfEdges() {
-		assertEquals("Number of edges", graph.numOfEdges(), 6);
+		assertEquals("Number of edges", graph.numOfEdges(), 4);
 	}
 
 	@Test
@@ -74,7 +72,7 @@ public class DirectedMultiGraphTest {
 
 	@Test
 	public void testGetEdges() {
-		Collection<String> edges = new LinkedList<String>(Arrays.asList(new String[]{"edge1-2", "edge1-2-2", "edge1-3", "edge2-3", "edge2-3-2", "edge3-4"}));
+		Collection<String> edges = new LinkedList<String>(Arrays.asList(new String[]{"edge1-2", "edge1-3", "edge2-3", "edge3-4"}));
 		assertTrue("Get all edges", graph.getEdges().containsAll(edges) && edges.containsAll(graph.getEdges()));
 	}
 
@@ -99,7 +97,7 @@ public class DirectedMultiGraphTest {
 
 	@Test
 	public void testIncidentEdges() {
-		Collection<String> incidentEdges = new LinkedList<String>(Arrays.asList(new String[]{"edge2-3", "edge2-3-2", "edge1-3", "edge3-4"}));
+		Collection<String> incidentEdges = new LinkedList<String>(Arrays.asList(new String[]{"edge2-3", "edge1-3", "edge3-4"}));
 		assertTrue("Get incident edges", graph.incidentEdges("3").containsAll(incidentEdges) && incidentEdges.containsAll(graph.incidentEdges("3")));
 		assertNull("Vertex doesn't exist", graph.incidentEdges("7"));
 	}
@@ -111,7 +109,7 @@ public class DirectedMultiGraphTest {
 		assertFalse("1 is not adjacent to 2", graph.isAdjacent("1", "2"));
 		assertTrue("2 is adjacent to 2", graph.isAdjacent("2", "1"));
 	}
-	
+
 	@Test
 	public void testAreAdjacent() {		
 		assertFalse("Both vertices don't exist", graph.areAdjacent("7", "8"));
@@ -145,7 +143,7 @@ public class DirectedMultiGraphTest {
 
 	@Test
 	public void testInDegree() {
-		assertEquals("Get the right indegree", graph.inDegree("3"), 3);
+		assertEquals("Get the right indegree", graph.inDegree("3"), 2);
 		assertEquals("Vertex doesn't exist", graph.inDegree("8"), -1);
 	}
 
@@ -171,14 +169,14 @@ public class DirectedMultiGraphTest {
 
 	@Test
 	public void testIncomingEdges() {
-		Collection<String> incomingEdges = new LinkedList<String>(Arrays.asList(new String[]{"edge2-3", "edge1-3", "edge2-3-2"}));
+		Collection<String> incomingEdges = new LinkedList<String>(Arrays.asList(new String[]{"edge2-3", "edge1-3"}));
 		assertTrue("Get incident edges", graph.incomingEdges("3").containsAll(incomingEdges) && incomingEdges.containsAll(graph.incomingEdges("3")));
 		assertNull("Vertex doesn't exist", graph.incomingEdges("7"));
 	}
 
 	@Test
 	public void testOutgoingEdges() {
-		Collection<String> outgoingEdges = new LinkedList<String>(Arrays.asList(new String[]{"edge1-2", "edge1-2-2", "edge1-3"}));
+		Collection<String> outgoingEdges = new LinkedList<String>(Arrays.asList(new String[]{"edge1-2", "edge1-3"}));
 		assertTrue("Get adjacent vertices", graph.outgoingEdges("1").containsAll(outgoingEdges) && outgoingEdges.containsAll(graph.outgoingEdges("1")));
 		assertNull("Vertex doesn't exist", graph.incidentEdges("7"));
 	}

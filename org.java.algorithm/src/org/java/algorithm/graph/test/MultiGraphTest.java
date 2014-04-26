@@ -1,4 +1,4 @@
-package org.java.algorithm.test;
+package org.java.algorithm.graph.test;
 
 import static org.junit.Assert.*;
 
@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import org.java.algorithm.graph.MultiGraph;
+import org.java.algorithm.graph.basics.MultiGraph;
 import org.junit.Before;
 import org.junit.Test;
 

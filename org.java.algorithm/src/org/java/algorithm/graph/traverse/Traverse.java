@@ -1,6 +1,6 @@
-package org.java.algorithm.traverse;
+package org.java.algorithm.graph.traverse;
 
-import org.java.algorithm.graph.*;
+import org.java.algorithm.graph.basics.*;
 
 import java.util.*;
 

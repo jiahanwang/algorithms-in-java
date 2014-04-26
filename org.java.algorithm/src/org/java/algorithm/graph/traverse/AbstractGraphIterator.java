@@ -1,8 +1,8 @@
-package org.java.algorithm.traverse;
+package org.java.algorithm.graph.traverse;
 
 import java.util.*;
 
-import org.java.algorithm.graph.Graph;
+import org.java.algorithm.graph.basics.Graph;
 
 public abstract class AbstractGraphIterator<V, E> implements Iterator<V>{
 	
