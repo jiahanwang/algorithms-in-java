@@ -6,11 +6,6 @@ import java.util.Comparator;
 
 public class MergeSort {
 	
-	/**
-	 * 
-	 * 
-	 * 
-	 * */
 	public static <T> Collection<T> mergeSort(Collection<T> values){
 		return mergeSort(values, 0, values.size() - 1, null);
 	}
@@ -23,6 +18,12 @@ public class MergeSort {
 		return mergeSort(values, fromIndex, toIndex, null);
 	}
 	
+	/**
+	 * All mergeSort methods of Collection call this method.
+	 * This method converts collection to array and then call mergeSort of array. 
+	 * It also checks the eligibility of all parameters.
+	 * 
+	 * */
 	@SuppressWarnings("unchecked")
 	public static <T> Collection<T> mergeSort(Collection<T> values, int fromIndex, int toIndex, Comparator<? super T> c){
 		if(values.size() <= 1)
@@ -35,11 +36,6 @@ public class MergeSort {
 		return Arrays.asList(valuesArray);
 	}
 	
-	
-	/**
-	 * 
-	 * 
-	 * */
 	public static <T> void mergeSort(T[] values){
 		mergeSort(values, 0, values.length - 1, null);
 	}
@@ -52,6 +48,12 @@ public class MergeSort {
 		mergeSort(values, fromIndex, toIndex, null);
 	}
 	
+	/**
+	 * All mergeSort methods call this method eventually.
+	 * This method serves the wrapper method of the recursive mergeSort to check all the eligibility of all parameters and declares
+	 * a helper array.
+	 * 
+	 * */
 	@SuppressWarnings("unchecked")
 	public static <T> void mergeSort(T[] values, int fromIndex, int toIndex, Comparator<? super T> c){
 		if(values.length <= 1)
@@ -61,20 +63,20 @@ public class MergeSort {
 		}
 		// need a helper array with size of length / 2 + 1, when merging copy left half into helper
 		T[] helper = (T[])(new Object[values.length / 2 + 1]);
-		mergeSort_recursive(values, helper, fromIndex, toIndex, c);
+		mergeSortInternal(values, helper, fromIndex, toIndex, c);
 	}
 	
 	/**
-	 * 
+	 * The internal recursive merge sort method
 	 * 
 	 * */
 	@SuppressWarnings("unchecked")
-	private static <T> void mergeSort_recursive(T[] values, T[] helper, int fromIndex, int toIndex, Comparator<T> c){
+	private static <T> void mergeSortInternal(T[] values, T[] helper, int fromIndex, int toIndex, Comparator<T> c){
 		//when fromIndex == toIndex return, or stack overflow
 		if(fromIndex >= toIndex) return;
 		int middleIndex = fromIndex + (toIndex - fromIndex) / 2;
-		mergeSort_recursive(values, helper, fromIndex ,middleIndex, c);
-		mergeSort_recursive(values, helper, middleIndex + 1, toIndex, c);
+		mergeSortInternal(values, helper, fromIndex ,middleIndex, c);
+		mergeSortInternal(values, helper, middleIndex + 1, toIndex, c);
 		int leftLen = middleIndex - fromIndex + 1;
 		// copy values[] to helper[], values[] is the final result
 		System.arraycopy(values, fromIndex, helper, 0, leftLen);
