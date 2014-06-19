@@ -6,7 +6,7 @@ import java.util.*;
  * 
  * @author Jiahan Wang
  * */
-public class AbstractDirectedGraph<V, E> 
+public abstract class AbstractDirectedGraph<V, E> 
 			extends AbstractGraph<V, E>
 			implements DirectedGraph<V, E> {
 	

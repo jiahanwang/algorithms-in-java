@@ -56,7 +56,7 @@ public abstract class AbstractUndirectedGraph<V, E>
 		}
 	}
 
-	@Override
+	 
 	public boolean removeEdge(E edge) {
 		if(!edges.containsKey(edge)){
 			// this edge doesn't exist (including null)
@@ -72,7 +72,7 @@ public abstract class AbstractUndirectedGraph<V, E>
 		}
 	}
 
-	@Override
+	 
 	public boolean removeVertex(V vertex) {
 		if(!vertices.containsKey(vertex)){
 			// this vertex doesn't exist(including null)
@@ -88,37 +88,37 @@ public abstract class AbstractUndirectedGraph<V, E>
 		}
 	}
 	
-	@Override
+	 
 	public int numOfVertices() {
 		return vertices.size();
 	}
 
-	@Override
+	 
 	public int numOfEdges() {
 		return edges.size();
 	}
 
-	@Override
+	 
 	public boolean containsVertex(V vertex) {
 		return vertices.containsKey(vertex);
 	}
 
-	@Override
+	 
 	public boolean containsEdge(E edge) {
 		return edges.containsKey(edge);
 	}
 
-	@Override
+	 
 	public Collection<V> getVertices() {
 		return Collections.unmodifiableCollection(vertices.keySet());
 	}
 
-	@Override
+	 
 	public Collection<E> getEdges() {
 		return Collections.unmodifiableCollection(edges.keySet());
 	}
 
-	@Override
+	 
 	public Collection<V> adjacentVertices(V vertex) {
 		if(!vertices.containsKey(vertex)){
 			return null;
@@ -133,7 +133,7 @@ public abstract class AbstractUndirectedGraph<V, E>
 		return Collections.unmodifiableCollection(verticesSet);
 	}
 
-	@Override
+	 
 	public Collection<E> incidentEdges(V vertex) {
 		if(!vertices.containsKey(vertex)){
 			return null;
@@ -148,7 +148,7 @@ public abstract class AbstractUndirectedGraph<V, E>
 	 * @return <code>false</code> if two vertices are not adjacent or any of the two vertices doesn't exist in the graph; <code>true</code> if two vertices are adjacent
 	 * 
 	 * */
-	@Override
+	 
 	public boolean areAdjacent(V vertex1, V vertex2) {
 		if(! vertices.containsKey(vertex1) || ! vertices.containsKey(vertex2)){
 			return false;
@@ -164,7 +164,7 @@ public abstract class AbstractUndirectedGraph<V, E>
 		}
 	}
 
-	@Override
+	 
 	public boolean areIncident(V vertex, E edge) {
 		if(!vertices.containsKey(vertex) || !edges.containsKey(edge)){
 			return false;
@@ -173,7 +173,7 @@ public abstract class AbstractUndirectedGraph<V, E>
 		}
 	}
 
-	@Override
+	 
 	public Collection<V> endVertices(E edge) {
 		if(!edges.containsKey(edge)){
 			return null;
@@ -185,7 +185,7 @@ public abstract class AbstractUndirectedGraph<V, E>
 		
 	}
 
-	@Override
+	 
 	public V opposite(E edge, V vertex) {
 		if(!vertices.containsKey(vertex) || !edges.containsKey(edge)){
 			return null;
@@ -203,7 +203,7 @@ public abstract class AbstractUndirectedGraph<V, E>
 			}
 	}
 
-	@Override
+	 
 	public int degree(V vertex) {
 		if(!vertices.containsKey(vertex)){
 			// return -1 when this vertex doesn't exist
