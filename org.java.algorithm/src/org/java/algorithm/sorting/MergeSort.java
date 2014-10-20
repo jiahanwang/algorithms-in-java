@@ -79,6 +79,7 @@ public class MergeSort {
 		mergeSortInternal(values, helper, middleIndex + 1, toIndex, c);
 		int leftLen = middleIndex - fromIndex + 1;
 		// copy values[] to helper[], values[] is the final result
+		// public static void arraycopy(Object src, int srcPos, Object dest, int destPos, int length)
 		System.arraycopy(values, fromIndex, helper, 0, leftLen);
 		// merge two halves to values[]
 		int i = 0, j = middleIndex + 1, k = fromIndex;
